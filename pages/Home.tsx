@@ -5,7 +5,7 @@ import { HeroSection } from '../components/home/HeroSection.tsx';
 import { ServicesGrid } from '../components/home/ServicesGrid.tsx';
 import { AIHubSection } from '../components/home/AIHubSection.tsx';
 import { FeaturedBlog } from '../components/home/FeaturedBlog.tsx';
-import { Footer } from '../components/layout/Footer.tsx';
+import { Footer } from '../components/organisms/Footer.tsx';
 import { AdminShield } from '../components/AdminShield.tsx';
 
 /**
@@ -25,7 +25,7 @@ export const Home: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
       style={{ backgroundColor: tokens.colors.brand.white }}
     >
       {/* 1. SEÇÃO HERO: IMPACTO E AUTORIDADE */}
-      <HeroSection onCTAClick={() => onNavigate('contato')} />
+      <HeroSection onCTAClick={(route) => onNavigate(route || 'contato')} />
 
       <main className="relative z-10">
         {/* 2. GRADE DE SERVIÇOS: SOLUÇÕES ESTRATÉGICAS */}
@@ -47,7 +47,7 @@ export const Home: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
         </div>
       </main>
 
-      {/* 5. RODAPÉ INSTITUCIONAL E COMPLIANCE */}
+      {/* 5. RODAPÉ INSTITUCIONAL E COMPLIANCE - Master Organism */}
       <Footer />
 
       {/* GOVERNANÇA: ADMIN SHIELD SEMPRE ATIVO EM BACKGROUND */}

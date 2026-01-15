@@ -3,7 +3,7 @@ import React from 'react';
 import { ServiceHero } from '../components/ServiceHero.tsx';
 import { FeaturesGrid, Feature } from '../components/FeaturesGrid.tsx';
 import { Container } from '../components/Container.tsx';
-import { Footer } from '../components/Footer.tsx';
+import { Footer } from '../components/organisms/Footer.tsx';
 import { TrendingDown, Landmark, Briefcase } from 'lucide-react';
 
 const RECUPERACAO_FEATURES: Feature[] = [

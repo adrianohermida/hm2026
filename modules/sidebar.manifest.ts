@@ -1,7 +1,7 @@
 
 /**
  * HM-V12 SIDEBAR MANIFEST - GOVERNANCE CONTRACT
- * Versão: 1.8.1 (LABORATÓRIO ADDED)
+ * Versão: 1.9.0 (CLEAN PRODUCTION)
  * Autorizado por: Dr. Adriano Hermida Maia
  */
 
@@ -26,10 +26,7 @@ export const SidebarManifest: Record<string, SidebarItemConfig> = {
   contratos: { id: "contratos", label: "Contratos", route: "contratos", order: 8 },
   documentos: { id: "documentos", label: "GED", route: "documentos", order: 9 },
   newsletter: { id: "newsletter", label: "Notícias", route: "newsletter", order: 10 },
-  configuracoes: { id: "configuracoes", label: "Configurações", route: "configuracoes", order: 11 },
-  lab: { id: "lab", label: "Laboratório", route: "lab", order: 12 },
-  "void-cell": { id: "void-cell", label: "Célula Neutra", route: "void-cell", order: 13 },
-  "blank-canvas": { id: "blank-canvas", label: "Quadro Branco", route: "blank-canvas", order: 14 }
+  configuracoes: { id: "configuracoes", label: "Configurações", route: "configuracoes", order: 11 }
 };
 
 export const SidebarGovernance = {

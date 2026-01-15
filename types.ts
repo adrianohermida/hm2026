@@ -181,6 +181,8 @@ export interface ProcessoJuridico {
   numero_cnj: string;
   tribunal: string;
   status: string;
+  // HM-V12 Fix: Added missing titulo property used in process lists and 360 details
+  titulo?: string;
   criado_em?: string;
   // HM-V12 Fix: Adding fields for unified process management in ProcessosRouter
   data_ultima_movimentacao?: string;

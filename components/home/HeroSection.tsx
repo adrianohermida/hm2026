@@ -1,95 +1,144 @@
 
 import React from 'react';
-import { MessageSquare, ChevronDown, Sparkles, Calendar } from 'lucide-react';
+import { MessageSquare, ChevronDown, Sparkles, Calendar, ArrowRight, Star, ShieldCheck, TrendingDown } from 'lucide-react';
 import { Typography } from '../ui/Typography.tsx';
 import { Button } from '../ui/Button.tsx';
 import { Container } from '../ui/Container.tsx';
 import { HomeSkeleton } from '../../modules/home/home-skeleton.tsx';
 
 export const HeroSection: React.FC<{ onCTAClick: (route?: string) => void }> = ({ onCTAClick }) => {
-  const { hero } = HomeSkeleton;
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#05080F] pt-48 md:pt-64 pb-24 md:pb-40">
-      {/* Atmosphere Gradients */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#05080F] pt-40 pb-24 md:pt-56 md:pb-32">
+      {/* Atmosfera de Fundo - Gradiantes Suaves */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-[#c5a059]/15 blur-[180px] rounded-full animate-pulse-slow" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-[#1a2b4b]/30 blur-[150px] rounded-full animate-pulse-slow delay-700" />
+        <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-[#c5a059]/10 blur-[180px] rounded-full animate-pulse-slow" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-[#1a2b4b]/20 blur-[150px] rounded-full animate-pulse-slow delay-700" />
       </div>
       
       <Container className="relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
-          {/* Lado Esquerdo: Conteúdo Estratégico */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+          {/* LADO ESQUERDO: CONTEÚDO E CONVERSÃO */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left animate-in fade-in slide-in-from-left-8 duration-1000">
             
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 mb-8 md:mb-12">
-              <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-2xl px-6 md:px-8 py-3 rounded-full border border-white/10 shadow-2xl">
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-[#c5a059] animate-pulse" />
-                <Typography variant="caption" className="text-[#c5a059] text-[10px] md:text-[12px] font-black tracking-[0.3em] md:tracking-[0.4em]">
-                  {hero.badge}
+            {/* Badge de Lei em Vigor */}
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-2xl px-6 py-2.5 rounded-full border border-white/10 shadow-2xl">
+                <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-pulse" />
+                <Typography variant="caption" className="text-[#c5a059] text-[10px] md:text-[11px] font-black tracking-[0.3em] uppercase">
+                  Lei 14.181/2021 - Superendividamento
                 </Typography>
               </div>
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200 mb-10">
-              <Typography variant="h1" font="serif" className="text-white text-5xl sm:text-6xl md:text-8xl xl:text-[110px] leading-[0.95] md:leading-[0.85] tracking-tighter">
-                Defesa da sua <br />
-                <span className="text-[#c5a059] italic relative inline-block">
-                  dignidade financeira.
-                  <span className="absolute -bottom-2 left-0 w-full h-[1px] bg-[#c5a059]/20" />
-                </span>
+            {/* Headline Principal */}
+            <div className="mb-10">
+              <Typography variant="h1" font="serif" className="text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.1] tracking-tighter">
+                Advogado Especialista em <span className="text-[#c5a059] italic">Superendividamento</span>: Parcele suas dívidas em até 5 anos.
               </Typography>
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-400 mb-12 md:mb-16">
-              <Typography variant="body" className="text-white/40 max-w-2xl text-lg md:text-3xl font-light leading-relaxed">
-                {hero.subtitle}
+            {/* Sub-headline */}
+            <div className="mb-12">
+              <Typography variant="body" className="text-white/50 max-w-xl text-lg md:text-2xl font-light leading-relaxed">
+                Mais de R$ 35 milhões em redução de passivos renegociados em todo o Brasil. Recupere sua paz e dignidade financeira hoje mesmo.
               </Typography>
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-500 w-full flex flex-col sm:flex-row justify-center lg:justify-start gap-5 md:gap-8 px-4 sm:px-0">
+            {/* CTAs */}
+            <div className="w-full flex flex-col sm:flex-row justify-center lg:justify-start gap-6 mb-12">
               <Button 
                 variant="secondary" 
                 size="lg" 
-                onClick={() => onCTAClick('contato')}
-                className="h-16 md:h-20 px-10 md:px-14 shadow-[0_20px_60px_rgba(197,160,89,0.4)] hover:scale-105 transition-all text-xs md:text-sm group w-full sm:w-auto"
-                icon={<MessageSquare size={18} className="ml-3 group-hover:translate-x-1 transition-transform" />}
+                onClick={() => onCTAClick('agendamento')}
+                className="h-16 md:h-20 px-10 md:px-12 shadow-[0_20px_60px_rgba(197,160,89,0.3)] hover:scale-105 transition-all group w-full sm:w-auto"
+                icon={<ArrowRight size={20} className="ml-3 group-hover:translate-x-2 transition-transform" />}
               >
-                Fale com especialista
+                Agendar Análise
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
-                onClick={() => onCTAClick('agendamento')}
-                className="h-16 md:h-20 px-10 md:px-14 border-white text-white bg-transparent hover:bg-white/10 transition-all text-xs md:text-sm group w-full sm:w-auto !border-2"
-                icon={<Calendar size={18} className="ml-3 group-hover:translate-x-1 transition-transform text-white" />}
+                onClick={() => onCTAClick('contato')}
+                className="h-16 md:h-20 px-10 md:px-12 border-white/20 text-white hover:bg-white/10 transition-all group w-full sm:w-auto"
               >
-                Agendar consulta
+                Falar com Especialista
               </Button>
+            </div>
+
+            {/* Prova Social */}
+            <div className="flex items-center gap-6 pt-4 border-t border-white/5 w-full justify-center lg:justify-start">
+              <div className="flex -space-x-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <img 
+                    key={i} 
+                    src={`https://ui-avatars.com/api/?name=User+${i}&background=c5a059&color=1a2b4b`} 
+                    className="w-12 h-12 rounded-full border-2 border-[#05080F] shadow-lg" 
+                    alt={`Cliente ${i}`} 
+                  />
+                ))}
+              </div>
+              <div className="text-left">
+                <div className="flex text-[#c5a059] gap-0.5 mb-1">
+                  {[1, 2, 3, 4, 5].map((i) => <Star key={i} size={14} fill="currentColor" />)}
+                </div>
+                <Typography variant="caption" className="text-white/40 normal-case font-bold text-[11px] tracking-tight">
+                  +2.500 famílias protegidas contra abusos.
+                </Typography>
+              </div>
             </div>
           </div>
 
-          {/* Lado Direito: Autoridade (Foto Dr. Adriano) */}
-          <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-300">
+          {/* LADO DIREITO: AUTORIDADE VISUAL */}
+          <div className="relative flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-300">
+             
+             {/* Badge Flutuante Superior (OAB) */}
+             <div className="absolute -top-6 -right-6 md:-top-10 md:-right-10 bg-white/10 backdrop-blur-3xl p-5 md:p-7 rounded-[2rem] border border-white/10 shadow-2xl z-50 animate-bounce-slow">
+                <div className="flex items-center gap-4">
+                  <div className="bg-[#c5a059]/20 p-3 rounded-2xl">
+                    <ShieldCheck className="text-[#c5a059]" size={28} />
+                  </div>
+                  <div className="text-left">
+                    <Typography variant="small" className="text-white font-black text-sm uppercase tracking-widest">OAB/RS 10748</Typography>
+                    <Typography variant="caption" className="text-white/40 text-[9px] uppercase font-black">Especialista Ativo</Typography>
+                  </div>
+                </div>
+             </div>
+
+             {/* Badge Flutuante Inferior (Sucesso) */}
+             <div className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 bg-white/10 backdrop-blur-3xl p-5 md:p-7 rounded-[2rem] border border-white/10 shadow-2xl z-50 animate-bounce-slow delay-500">
+                <div className="flex items-center gap-4">
+                  <div className="bg-emerald-500/20 p-3 rounded-2xl">
+                    <TrendingDown className="text-emerald-500" size={28} />
+                  </div>
+                  <div className="text-left">
+                    <Typography variant="small" className="text-white font-black text-sm uppercase tracking-widest">98% de Êxito</Typography>
+                    <Typography variant="caption" className="text-white/40 text-[9px] uppercase font-black">Em Renegociações</Typography>
+                  </div>
+                </div>
+             </div>
+
+             {/* Frame da Imagem Principal */}
              <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-tr from-brand-secondary/60 to-transparent rounded-[3rem] blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-700" />
-                <div className="relative w-full max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[580px] aspect-[4/5] rounded-[3.5rem] md:rounded-[5rem] overflow-hidden border-[10px] md:border-[20px] border-white/5 backdrop-blur-3xl shadow-2xl transition-all duration-700 group-hover:scale-[1.01]">
+                {/* Glow de destaque atrás da imagem */}
+                <div className="absolute -inset-4 bg-gradient-to-tr from-[#c5a059]/30 to-transparent rounded-[4rem] blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-700" />
+                
+                <div className="relative w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[540px] aspect-[4/5] rounded-[3.5rem] md:rounded-[5rem] overflow-hidden border-[10px] md:border-[16px] border-white/5 backdrop-blur-3xl shadow-2xl transition-all duration-700 group-hover:scale-[1.01] group-hover:rotate-1">
                    <img 
-                      src="https://hermidamaia.adv.br/styles/assets/images/perfil_2.jpg" 
-                      className="w-full h-full object-cover object-center filter contrast-[1.05]"
+                      src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69457177ae7e61f63fb38329/3b78c0579__TLM961311.jpg" 
+                      className="w-full h-full object-cover object-center filter brightness-[1.05] contrast-[1.05]"
                       alt="Dr. Adriano Hermida Maia"
                    />
-                   <div className="absolute inset-0 bg-gradient-to-t from-[#05080F]/80 via-transparent to-transparent" />
                    
-                   <div className="absolute bottom-10 left-10 right-10 p-8 md:p-12 bg-white/10 backdrop-blur-3xl rounded-[2.5rem] border border-white/10">
-                      <Typography variant="h4" font="serif" className="text-white text-2xl md:text-3xl mb-1">Dr. Adriano Hermida Maia</Typography>
+                   {/* Overlay Gradiente de Rodapé da Foto */}
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#05080F]/90 via-transparent to-transparent" />
+                   
+                   {/* Identificação na Foto */}
+                   <div className="absolute bottom-8 left-8 right-8 p-6 md:p-10 bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10">
+                      <Typography variant="h4" font="serif" className="text-white text-xl md:text-3xl mb-1">Dr. Adriano Hermida Maia</Typography>
                       <div className="flex items-center justify-between">
-                         <Typography variant="caption" className="text-brand-secondary font-black tracking-widest text-[9px] md:text-[12px] uppercase">OAB/RS 10748</Typography>
-                         <div className="flex gap-2 items-center">
-                            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
-                            <span className="text-[10px] font-black text-white/60 uppercase tracking-tighter">Advogado Especialista</span>
-                         </div>
+                         <Typography variant="caption" className="text-[#c5a059] font-black tracking-widest text-[9px] md:text-[11px] uppercase">Advocacia Estratégica</Typography>
+                         <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
                       </div>
                    </div>
                 </div>
@@ -99,8 +148,9 @@ export const HeroSection: React.FC<{ onCTAClick: (route?: string) => void }> = (
         </div>
       </Container>
       
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 opacity-20 animate-bounce cursor-pointer hidden md:block">
-        <ChevronDown size={24} className="text-white" />
+      {/* Scroll Down Hint */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-20 animate-bounce cursor-pointer hidden md:block z-20">
+        <ChevronDown size={28} className="text-white" />
       </div>
     </section>
   );

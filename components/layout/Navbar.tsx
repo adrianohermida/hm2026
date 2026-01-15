@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Menu, X, ChevronRight, LayoutGrid, MessageSquare, BookOpen, User, ShieldCheck, HelpCircle, Calendar } from 'lucide-react';
+import { Menu, X, ChevronRight, LayoutGrid, MessageSquare, BookOpen, User, ShieldCheck, HelpCircle, Calendar, Scale } from 'lucide-react';
 import { Container } from '../ui/Container.tsx';
 import { Typography } from '../ui/Typography.tsx';
 import { Button } from '../ui/Button.tsx';
@@ -25,24 +25,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
 
   const handleNavigation = useCallback((route: string, sectionId?: string) => {
     setMobileOpen(false);
-    if (route === 'home') {
-      if (currentPage === 'home' && sectionId) {
+    if (route === 'home' && sectionId) {
+      if (currentPage === 'home') {
         const el = document.getElementById(sectionId);
         if (el) {
-          const navHeight = 70;
+          const navHeight = 90;
           const targetPos = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
           window.scrollTo({ top: targetPos, behavior: 'smooth' });
         }
       } else {
         onNavigate('home');
-        if (sectionId) {
-          setTimeout(() => {
-            const el = document.getElementById(sectionId);
-            if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 70, behavior: 'smooth' });
-          }, 400);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // Pequeno timeout para garantir que o componente Home renderizou antes do scroll
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) {
+            const navHeight = 90;
+            const targetPos = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          }
+        }, 300);
       }
     } else {
       onNavigate(route);
@@ -50,12 +51,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
     }
   }, [currentPage, onNavigate]);
 
+  // HM-V12: Menu simplificado conforme solicitado
   const navItems = [
     { label: 'Início', route: 'home', icon: <LayoutGrid size={20}/> },
     { label: 'O Sócio', route: 'escritorio', icon: <User size={20}/> },
-    { label: 'Agendar', route: 'agendamento', icon: <Calendar size={20}/> },
-    { label: 'Educação', route: 'blog', icon: <BookOpen size={20}/> },
-    { label: 'Ajuda', route: 'ajuda', icon: <HelpCircle size={20}/> },
+    { label: 'Serviços', route: 'home', sectionId: 'servicos', icon: <Scale size={20}/> },
+    { label: 'Blog', route: 'blog', icon: <BookOpen size={20}/> },
     { label: 'Contato', route: 'contato', icon: <MessageSquare size={20}/> }
   ];
 
@@ -87,10 +88,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             {navItems.map((item) => (
               <button 
                 key={item.label} 
-                onClick={() => handleNavigation(item.route)}
+                onClick={() => handleNavigation(item.route, item.sectionId)}
                 className={`text-[9px] font-black uppercase tracking-widest hover:text-brand-secondary transition-all py-2 border-b-2 border-transparent ${
                   hasBackground ? 'text-slate-600' : 'text-white/90'
-                } ${currentPage === item.route ? 'border-brand-secondary text-brand-secondary' : ''}`}
+                } ${currentPage === item.route && !item.sectionId ? 'border-brand-secondary text-brand-secondary' : ''}`}
               >
                 {item.label}
               </button>
@@ -118,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             {navItems.map((item, i) => (
               <button 
                 key={item.label}
-                onClick={() => handleNavigation(item.route)}
+                onClick={() => handleNavigation(item.route, item.sectionId)}
                 className="w-full flex items-center justify-between p-6 rounded-2xl bg-white/5 border border-white/5 active:bg-brand-secondary active:text-brand-primary transition-all group"
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
