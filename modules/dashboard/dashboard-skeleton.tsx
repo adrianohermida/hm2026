@@ -1,13 +1,14 @@
+
 import React from 'react';
-import { LayoutGrid, PieChart, Users, Ticket, Headset, Zap, BookOpen, Megaphone, Bot, Briefcase, Settings } from 'lucide-react';
+import { LayoutDashboard, PieChart, Activity } from 'lucide-react';
 import { IModuleSkeleton } from '../contracts.ts';
 
 export const DashboardSkeleton: IModuleSkeleton = {
-  moduleId: 'dashboard',
-  moduleName: 'Dashboard',
-  title: 'Gestão Estratégica',
-  description: 'Orquestração centralizada de todos os núcleos operacionais da advocacia digital.',
-  icon: React.createElement(PieChart, { size: 40, className: "text-brand-secondary/40" }),
+  moduleId: "dashboard",
+  moduleName: "Dashboard",
+  title: "Visão Geral",
+  description: "Centro de comando e inteligência de negócios (BI) do escritório.",
+  icon: <LayoutDashboard size={40} className="text-brand-secondary/40" />,
   
   compliance: {
     atomization: true,
@@ -19,32 +20,38 @@ export const DashboardSkeleton: IModuleSkeleton = {
 
   integrations: {
     supabase: true,
-    googleWorkspace: true,
-    govBr: true,
+    googleWorkspace: false,
+    govBr: false,
     blockchain: false,
     cloudflare: true
   },
 
   permissions: {
-    allowedRoles: ['admin', 'gestor'],
+    allowedRoles: ["admin", "gestor", "advogado", "cliente"]
   },
 
   sidebar: {
-    label: 'Dashboard',
-    icon: React.createElement(LayoutGrid, { size: 18 }),
-    route: 'dashboard',
-    order: 0,
-    badge: 'ATIVO',
+    label: "Visão Geral",
+    icon: <PieChart size={18} />,
+    route: "dashboard",
+    order: 0
   },
 
   breadcrumbs: [
-    { label: 'Sistema', route: 'dashboard', isClickable: false }
+    { label: "Kernel", route: "dashboard", isClickable: true },
+    { label: "Visão Geral", route: "dashboard", isClickable: false }
   ],
 
   metadata: {
-    version: '12.0.1',
-    type: 'ORQUESTRADOR_CORE',
-    arch: 'HM-V12-SOBERANO',
-    mcp_sync: true
+    version: "12.5.0",
+    type: 'BI_CORE',
+    arch: 'HM-V12-KERN',
+    mcp_sync: true,
+    schema: 'metrics'
+  },
+
+  kpis: {
+    refreshRate: 30000, // 30s
+    realtime: true
   }
 };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { LogOut, ChevronRight, Home, LayoutDashboard, Settings } from 'lucide-react';
 import { Typography } from '../atoms/Typography.tsx';
 import { sidebarService } from '../../services/sidebar.service.ts';
@@ -10,7 +11,9 @@ import { CRM } from '../../admin/crm/crm.tsx';
 import { HelpDesk } from '../../admin/helpdesk/helpdesk.tsx';
 import { Process } from '../../admin/process/process.tsx';
 import { Publication } from '../../admin/publication/publication.tsx';
-import { CalendarModule } from '../../admin/calendar/calendar.tsx';
+import { AgendaModule } from '../../admin/agenda/index.tsx';
+import { Config } from '../../admin/config/config.tsx';
+import { ProcessoDetails360 } from './ProcessoDetails360.tsx';
 import { PaginaEmBranco } from '../../pages/PaginaEmBranco.tsx';
 
 export const PortalPage: React.FC<{ 
@@ -18,16 +21,34 @@ export const PortalPage: React.FC<{
   onLogout: () => void; 
   onNavigate: (page: string) => void;
   children?: React.ReactNode;
+  user?: any;
 }> = ({ isAdmin = false, onLogout, onNavigate, children }) => {
   const [activeRoute, setActiveRoute] = useState('dashboard');
+  const [processoId, setProcessoId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState(false);
   const userRole = isAdmin ? 'admin' : 'cliente';
+
+  useEffect(() => {
+    const sync = () => {
+      const hash = window.location.hash.replace('#/', '');
+      if (hash.startsWith('processo/')) {
+        setActiveRoute('processo-view');
+        setProcessoId(hash.split('/')[1]);
+      } else if (hash) {
+        setActiveRoute(hash);
+      } else {
+        setActiveRoute('dashboard');
+      }
+    };
+    window.addEventListener('hashchange', sync);
+    sync();
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
 
   const menuItems = sidebarService.buildSidebar(userRole);
   const crumbs = breadcrumbService.getBreadcrumbs(activeRoute);
 
-  const renderContent = () => {
-    // Se children for passado (Portal do Cliente), ignora as rotas admin
+  const renderModule = () => {
     if (children) return children;
 
     switch (activeRoute) {
@@ -36,7 +57,9 @@ export const PortalPage: React.FC<{
       case 'tickets': return <HelpDesk />;
       case 'processos': return <Process />;
       case 'publicacoes': return <Publication />;
-      case 'agenda': return <CalendarModule />;
+      case 'agenda': return <AgendaModule />;
+      case 'configuracoes': return <Config />;
+      case 'processo-view': return <ProcessoDetails360 id={processoId!} userRole="admin" onBack={() => window.location.hash = '#/processos'} />;
       case 'canvas': return <PaginaEmBranco onBack={() => setActiveRoute('dashboard')} />;
       default: return <Dashboard />;
     }
@@ -53,7 +76,7 @@ export const PortalPage: React.FC<{
           {menuItems.map((item) => (
             <button 
               key={item.route}
-              onClick={() => setActiveRoute(item.route)}
+              onClick={() => { window.location.hash = `#/${item.route}`; }}
               className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all duration-300 group ${activeRoute === item.route ? 'bg-brand-secondary text-brand-primary shadow-lg' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}
             >
               <div className="flex items-center gap-4">
@@ -94,7 +117,7 @@ export const PortalPage: React.FC<{
                 ))}
               </nav>
             )}
-            {renderContent()}
+            {renderModule()}
           </div>
         </div>
       </main>
