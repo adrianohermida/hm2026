@@ -1,28 +1,28 @@
 
 import React from 'react';
-import { MapPin, Phone, Mail, ShieldCheck, Linkedin, Instagram, Youtube, Music2, Globe } from 'lucide-react';
+import { MapPin, Phone, Mail, ShieldCheck, Linkedin, Instagram, Youtube, Music2 } from 'lucide-react';
 import { Container } from '../ui/Container.tsx';
 import { Typography } from '../ui/Typography.tsx';
 import { Logo } from '../ui/Logo.tsx';
 
 export const Footer: React.FC = () => {
   return (
-    <footer id="contato" className="bg-[#132038] pt-32 md:pt-48 pb-16 text-white border-t border-white/5 relative overflow-hidden">
+    <footer id="contato" className="bg-[#1a2b4a] pt-32 md:pt-48 pb-16 text-white border-t border-white/5 relative overflow-hidden">
       {/* Glow Atmosphere */}
       <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-brand-secondary/5 blur-[200px] rounded-full -mr-96 -mb-96 pointer-events-none" />
       
       <Container className="relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-32 mb-24 md:mb-32">
           
-          {/* Brand Identity */}
+          {/* Brand Identity - Alinhado com Navbar */}
           <div className="md:col-span-5 space-y-10 md:space-y-12">
             <div className="flex items-center gap-6 md:gap-8">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-white flex items-center justify-center rounded-lg shadow-2xl p-3 border-2 border-brand-secondary/30">
-                <Logo className="w-full h-full" variant="dark" />
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-brand-primary rounded-xl flex items-center justify-center p-3 border-2 border-brand-primary shadow-xl">
+                <Logo className="w-full h-full" variant="light" />
               </div>
-              <div className="flex flex-col">
-                <Typography variant="h3" font="serif" className="text-white text-3xl md:text-4xl leading-none mb-2">Hermida Maia</Typography>
-                <Typography variant="caption" className="text-brand-secondary font-black text-[10px] md:text-[11px] uppercase tracking-[0.4em] md:tracking-[0.5em] block">Dr. Adriano Hermida Maia</Typography>
+              <div className="flex flex-col justify-center">
+                <span className="text-white font-black text-xl md:text-2xl leading-tight uppercase tracking-tighter">Dr. Adriano Hermida Maia</span>
+                <span className="text-brand-secondary text-[10px] md:text-xs font-black uppercase tracking-[0.3em]">Defesa do Superendividamento</span>
               </div>
             </div>
             <Typography variant="body" className="text-white/40 max-w-lg italic font-light leading-relaxed text-xl md:text-2xl">

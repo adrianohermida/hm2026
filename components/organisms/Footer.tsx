@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#05080F] pt-24 pb-12 border-t border-white/5 relative overflow-hidden text-white font-sans">
+    <footer className="bg-[#1a2b4a] pt-24 pb-12 border-t border-white/10 relative overflow-hidden text-white font-sans">
       {/* Atmosfera Visual */}
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-brand-secondary/5 blur-[150px] rounded-full pointer-events-none" />
       
@@ -54,12 +54,12 @@ export const Footer: React.FC = () => {
           {/* COLUNA 1: IDENTIDADE */}
           <div className="space-y-8">
             <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
-              <div className="bg-white rounded-2xl p-2 w-14 h-14 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-105">
-                <Logo variant="dark" />
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center p-2 shadow-xl transition-transform group-hover:scale-105 bg-brand-primary border border-brand-primary">
+                <Logo variant="light" />
               </div>
-              <div>
-                <Typography variant="h4" font="serif" className="text-white text-xl leading-none">Hermida Maia</Typography>
-                <Typography variant="caption" className="text-brand-secondary text-[8px] font-black tracking-[0.3em] uppercase block mt-1">Advocacia Digital</Typography>
+              <div className="flex flex-col">
+                <span className="text-white font-black text-sm md:text-lg leading-tight uppercase tracking-tighter transition-colors">Dr. Adriano Hermida Maia</span>
+                <span className="text-brand-secondary text-[8px] font-black uppercase tracking-[0.3em]">Defesa do Superendividamento</span>
               </div>
             </div>
             
