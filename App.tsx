@@ -11,7 +11,7 @@ import { ContatoPage } from './pages/Contato.tsx';
 import { AuthPage } from './auth/login.tsx';
 import { ProfilePage } from './pages/ProfilePage.tsx';
 import { AuthCallback } from './pages/AuthCallback.tsx';
-import { PortalPage } from './components/organisms/PortalPage.tsx';
+import { PortalPage } from './components/organisms/PortalPage.tsx'; // Importa versão correta
 import { ClientPortal } from './components/organisms/Portal/ClientPortal.tsx';
 import { Navbar } from './components/layout/Navbar.tsx';
 import { LegalChatWidget } from './components/LegalChatWidget.tsx';
@@ -28,19 +28,22 @@ const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // HM-V12: Router de Sincronia para GitHub Pages (Hash Navigation)
+  // HM-V12: Router Robusto para GitHub Pages (Hash Strategy)
   const syncRoute = useCallback(() => {
-    const hash = window.location.hash.replace('#/', '').replace('#', '');
+    // Normaliza hash (remove # e / extras)
+    const hash = window.location.hash.replace(/^#\/?/, '');
     
+    // Raiz
     if (!hash) {
       if (currentPage !== 'home') setCurrentPage('home');
       return;
     }
 
-    // Rotas protegidas ou especiais
+    // Rotas Admin/Portal
     if (hash.startsWith('portal')) {
-      if (isAuthenticated) setCurrentPage('portal');
-      else {
+      if (isAuthenticated) {
+        setCurrentPage('portal');
+      } else {
         window.location.hash = '#/login';
         setCurrentPage('login');
       }
@@ -49,46 +52,42 @@ const App: React.FC = () => {
 
     if (hash === 'perfil') {
       if (isAuthenticated) setCurrentPage('perfil');
-      else setCurrentPage('login');
+      else {
+        window.location.hash = '#/login';
+        setCurrentPage('login');
+      }
       return;
     }
 
-    // Mapeamento direto de rotas públicas
+    // Rotas Públicas
     const validRoutes = [
-      'home', 
-      'direito-bancario', 
-      'superendividamento', 
-      'recuperacao-falencia', 
-      'blog', 
-      'escritorio', 
-      'contato', 
-      'ajuda', 
-      'login', 
-      'balcao-virtual', 
-      'agendamento',
-      'auth-callback'
+      'home', 'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
+      'blog', 'escritorio', 'contato', 'ajuda', 'login', 'balcao-virtual', 
+      'agendamento', 'auth-callback'
     ];
 
     if (validRoutes.includes(hash)) {
       setCurrentPage(hash);
+    } else if (hash === 'blogspot' && selectedPost) {
+       setCurrentPage('blogspot');
     }
-  }, [isAuthenticated, currentPage]);
+  }, [isAuthenticated, currentPage, selectedPost]);
 
   useEffect(() => {
-    // 1. Expor trigger do Chat
     (window as any).triggerHMChat = () => setIsChatOpen(true);
-    
-    // 2. Sincronia Inicial (Mount)
     syncRoute();
-
-    // 3. Listener de Mudança de Hash
     window.addEventListener('hashchange', syncRoute);
     return () => window.removeEventListener('hashchange', syncRoute);
   }, [syncRoute]);
 
   const handleNavigate = (page: string) => {
+    if (page === 'portal') {
+       const target = userRole === 'admin' ? '#/portal/dashboard' : '#/portal/overview';
+       window.location.hash = target;
+    } else {
+       window.location.hash = `#/${page}`;
+    }
     setCurrentPage(page);
-    window.location.hash = `#/${page}`;
     window.scrollTo(0, 0);
   };
 
@@ -114,11 +113,12 @@ const App: React.FC = () => {
 
   const navigateToPost = (post: ArtigoBlog) => {
     setSelectedPost(post);
+    window.location.hash = '#/blogspot';
     setCurrentPage('blogspot');
     window.scrollTo(0, 0);
   };
 
-  const showNavbar = !['balcao-virtual', 'auth-callback'].includes(currentPage);
+  const showNavbar = !['balcao-virtual', 'auth-callback', 'login', 'portal'].includes(currentPage);
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-brand-secondary/30">

@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { LogOut, Download, ShieldCheck, ChevronRight, LayoutDashboard, MessageSquare, CreditCard, Calendar, FileText, Wallet } from 'lucide-react';
+import { LogOut, Download, ShieldCheck, ChevronRight, LayoutDashboard, MessageSquare, CreditCard, Calendar, FileText, Wallet, Menu, X } from 'lucide-react';
 import { Typography } from '../../atoms/Typography.tsx';
 import { Container } from '../../atoms/Container.tsx';
+import { Logo } from '../../ui/Logo.tsx';
 import { PortalLabels } from '../../../modules/portal/portal-skeleton.tsx';
 import { PortalOverview } from './modules/PortalOverview.tsx';
 import { PortalProcessos } from './modules/PortalProcessos.tsx';
@@ -19,6 +20,7 @@ interface Props {
 
 export const ClientPortal: React.FC<Props> = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const renderActiveModule = () => {
     switch (activeTab) {
@@ -35,23 +37,67 @@ export const ClientPortal: React.FC<Props> = ({ user, onLogout }) => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-brand-secondary/30 selection:text-brand-primary">
-      <main className="py-12 md:py-20">
+      
+      {/* HEADER DO CLIENT PORTAL */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <Container className="h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4 cursor-pointer" onClick={() => setActiveTab('overview')}>
+            <div className="w-10 h-10 bg-brand-primary rounded-xl flex items-center justify-center p-1.5 shadow-md">
+              <Logo variant="light" />
+            </div>
+            <div className="hidden md:block">
+              <Typography variant="small" className="font-black text-brand-primary uppercase tracking-tight leading-none">Portal do Cliente</Typography>
+              <Typography variant="caption" className="text-brand-secondary text-[8px] font-black uppercase tracking-[0.3em]">Hermida Maia</Typography>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+             <div className="hidden md:flex items-center gap-3 px-4 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+               <div className="w-6 h-6 rounded-full bg-brand-secondary flex items-center justify-center text-[10px] font-black text-brand-primary">
+                 {user?.email?.[0].toUpperCase()}
+               </div>
+               <span className="text-[10px] font-bold text-slate-600">{user?.email?.split('@')[0]}</span>
+             </div>
+             <button 
+                onClick={onLogout}
+                className="flex items-center gap-2 px-4 py-2 text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+             >
+                <LogOut size={16} /> <span className="hidden md:inline text-[10px] font-black uppercase tracking-widest">Sair</span>
+             </button>
+             <button 
+               className="md:hidden p-2 text-slate-500"
+               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+             >
+               {mobileMenuOpen ? <X /> : <Menu />}
+             </button>
+          </div>
+        </Container>
+      </header>
+
+      {/* MOBILE MENU */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-20 bg-white z-40 p-6 border-t border-slate-100 overflow-y-auto">
+           <nav className="space-y-2">
+              {PortalLabels.tabs.map(tab => (
+                <button 
+                  key={tab.id}
+                  onClick={() => { setActiveTab(tab.id); setMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all ${activeTab === tab.id ? 'bg-brand-primary text-white' : 'bg-slate-50 text-slate-500'}`}
+                >
+                  {tab.icon}
+                  <span className="text-xs font-black uppercase tracking-widest">{tab.label}</span>
+                </button>
+              ))}
+           </nav>
+        </div>
+      )}
+
+      <main className="py-12">
         <Container>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             
-            {/* SIDEBAR LIGHT MODE */}
-            <aside className="w-full lg:w-72 shrink-0 space-y-6">
-              <div className="p-8 bg-white border border-slate-200 rounded-[2.5rem] text-center shadow-sm">
-                <div className="w-20 h-20 rounded-[2rem] bg-brand-primary border-4 border-slate-50 mx-auto mb-6 flex items-center justify-center text-brand-secondary text-2xl font-serif shadow-xl">
-                   {user?.email?.[0].toUpperCase()}
-                </div>
-                <Typography variant="small" className="font-bold text-brand-primary block mb-1">{user?.email?.split('@')[0]}</Typography>
-                <div className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full border border-emerald-100 mt-2">
-                   <ShieldCheck size={10} />
-                   <Typography variant="caption" className="text-emerald-600 text-[8px] tracking-widest block uppercase font-black">Auditado V12</Typography>
-                </div>
-              </div>
-
+            {/* SIDEBAR DESKTOP */}
+            <aside className="hidden lg:block w-72 shrink-0 space-y-6 sticky top-28 h-fit">
               <nav className="space-y-2">
                 {PortalLabels.tabs.map(tab => (
                   <button 
@@ -68,12 +114,13 @@ export const ClientPortal: React.FC<Props> = ({ user, onLogout }) => {
                 ))}
               </nav>
 
-              <button className="w-full flex items-center justify-center gap-3 p-5 bg-white hover:bg-slate-50 text-slate-400 hover:text-brand-primary rounded-2xl transition-all border border-slate-200 text-[9px] font-black uppercase tracking-widest group">
-                <Download size={16} className="group-hover:text-brand-secondary transition-colors"/> Exportar Dados
-              </button>
+              <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-3xl text-center">
+                 <ShieldCheck className="mx-auto text-emerald-500 mb-2" size={24} />
+                 <Typography variant="caption" className="text-emerald-700 font-bold normal-case leading-tight">Ambiente Criptografado Ponta-a-Ponta</Typography>
+              </div>
             </aside>
 
-            {/* CONTEÚDO PRINCIPAL LIGHT MODE */}
+            {/* CONTEÚDO PRINCIPAL */}
             <div className="flex-1 min-w-0 min-h-[70vh]">
                {renderActiveModule()}
             </div>
