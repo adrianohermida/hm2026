@@ -18,6 +18,7 @@ import { LegalChatWidget } from './components/LegalChatWidget.tsx';
 import { BalcaoVirtual } from './pages/BalcaoVirtual.tsx';
 import { HelpCenter } from './pages/HelpCenter.tsx';
 import { AppointmentsPage } from './pages/AppointmentsPage.tsx';
+import { Blank } from './pages/Blank.tsx';
 import { ArtigoBlog } from './types.ts';
 
 const App: React.FC = () => {
@@ -31,6 +32,7 @@ const App: React.FC = () => {
     if (hash === 'login') return 'login';
     if (hash === 'perfil') return 'perfil';
     if (hash === 'auth-callback') return 'auth-callback';
+    if (hash === 'blank') return 'blank';
     
     // Rotas Públicas
     const validRoutes = [
@@ -90,7 +92,7 @@ const App: React.FC = () => {
     const validRoutes = [
       'home', 'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
       'blog', 'escritorio', 'contato', 'ajuda', 'login', 'balcao-virtual', 
-      'agendamento', 'auth-callback', 'blogspot'
+      'agendamento', 'auth-callback', 'blogspot', 'blank'
     ];
 
     const baseRoute = hash.split('/')[0];
@@ -149,7 +151,7 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  const showNavbar = !['balcao-virtual', 'auth-callback', 'login', 'portal'].includes(currentPage);
+  const showNavbar = !['balcao-virtual', 'auth-callback', 'login', 'portal', 'blank'].includes(currentPage);
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-brand-secondary/30">
@@ -192,11 +194,12 @@ const App: React.FC = () => {
             {currentPage === 'balcao-virtual' && <BalcaoVirtual onBack={() => handleNavigate('home')} />}
             {currentPage === 'login' && <AuthPage onLogin={handleLogin} onBack={() => handleNavigate('home')} />}
             {currentPage === 'agendamento' && <AppointmentsPage onBack={() => handleNavigate('home')} />}
+            {currentPage === 'blank' && <Blank />}
           </>
         )}
       </main>
 
-      {!['portal', 'login', 'balcao-virtual', 'auth-callback'].includes(currentPage) && (
+      {!['portal', 'login', 'balcao-virtual', 'auth-callback', 'blank'].includes(currentPage) && (
         <LegalChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
       )}
     </div>
