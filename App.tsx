@@ -21,7 +21,34 @@ import { AppointmentsPage } from './pages/AppointmentsPage.tsx';
 import { ArtigoBlog } from './types.ts';
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState('home');
+  // HM-V12: Inicialização Lazy do Estado
+  // Lê a URL imediatamente para definir a página inicial correta e evitar "piscar" a Home
+  const getInitialState = () => {
+    const hash = window.location.hash.replace(/^#\/?/, '');
+    
+    // Rotas Admin/Portal
+    if (hash.startsWith('portal')) return 'portal';
+    if (hash === 'login') return 'login';
+    if (hash === 'perfil') return 'perfil';
+    if (hash === 'auth-callback') return 'auth-callback';
+    
+    // Rotas Públicas
+    const validRoutes = [
+      'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
+      'blog', 'escritorio', 'contato', 'ajuda', 'balcao-virtual', 
+      'agendamento', 'blogspot'
+    ];
+    
+    // Tratamento para sub-rotas (ex: blogspot/123)
+    const baseRoute = hash.split('/')[0];
+    if (validRoutes.includes(baseRoute) || validRoutes.includes(hash)) {
+      return baseRoute === 'blogspot' ? 'blogspot' : hash;
+    }
+
+    return 'home';
+  };
+
+  const [currentPage, setCurrentPage] = useState<string>(getInitialState);
   const [selectedPost, setSelectedPost] = useState<ArtigoBlog | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState<'admin' | 'cliente'>('cliente');
@@ -30,7 +57,6 @@ const App: React.FC = () => {
 
   // HM-V12: Router Robusto para GitHub Pages (Hash Strategy)
   const syncRoute = useCallback(() => {
-    // Normaliza hash (remove # e / extras)
     const hash = window.location.hash.replace(/^#\/?/, '');
     
     // Raiz
@@ -44,6 +70,7 @@ const App: React.FC = () => {
       if (isAuthenticated) {
         setCurrentPage('portal');
       } else {
+        // Salva a tentativa de acesso para redirecionar pós-login (opcional)
         window.location.hash = '#/login';
         setCurrentPage('login');
       }
@@ -59,23 +86,26 @@ const App: React.FC = () => {
       return;
     }
 
-    // Rotas Públicas
+    // Rotas Públicas e Dinâmicas
     const validRoutes = [
       'home', 'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
       'blog', 'escritorio', 'contato', 'ajuda', 'login', 'balcao-virtual', 
-      'agendamento', 'auth-callback'
+      'agendamento', 'auth-callback', 'blogspot'
     ];
 
-    if (validRoutes.includes(hash)) {
-      setCurrentPage(hash);
-    } else if (hash === 'blogspot' && selectedPost) {
-       setCurrentPage('blogspot');
-    }
-  }, [isAuthenticated, currentPage, selectedPost]);
+    const baseRoute = hash.split('/')[0];
+
+    if (validRoutes.includes(baseRoute)) {
+      setCurrentPage(baseRoute);
+    } 
+  }, [isAuthenticated, currentPage]);
 
   useEffect(() => {
     (window as any).triggerHMChat = () => setIsChatOpen(true);
+    
+    // Executa syncRoute na montagem para garantir consistência
     syncRoute();
+    
     window.addEventListener('hashchange', syncRoute);
     return () => window.removeEventListener('hashchange', syncRoute);
   }, [syncRoute]);
@@ -113,7 +143,8 @@ const App: React.FC = () => {
 
   const navigateToPost = (post: ArtigoBlog) => {
     setSelectedPost(post);
-    window.location.hash = '#/blogspot';
+    // Adiciona ID ao hash se desejar persistência: #/blogspot/slug-do-post
+    window.location.hash = `#/blogspot`;
     setCurrentPage('blogspot');
     window.scrollTo(0, 0);
   };

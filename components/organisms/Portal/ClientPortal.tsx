@@ -38,34 +38,34 @@ export const ClientPortal: React.FC<Props> = ({ user, onLogout }) => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-brand-secondary/30 selection:text-brand-primary">
       
-      {/* HEADER DO CLIENT PORTAL */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+      {/* HEADER DO CLIENT PORTAL (BLUE) */}
+      <header className="bg-[#1a2b4a] text-white border-b border-white/10 sticky top-0 z-50 shadow-lg">
         <Container className="h-20 flex items-center justify-between">
           <div className="flex items-center gap-4 cursor-pointer" onClick={() => setActiveTab('overview')}>
-            <div className="w-10 h-10 bg-brand-primary rounded-xl flex items-center justify-center p-1.5 shadow-md">
+            <div className="w-10 h-10 bg-brand-primary rounded-xl flex items-center justify-center p-1.5 shadow-md border border-white/20">
               <Logo variant="light" />
             </div>
             <div className="hidden md:block">
-              <Typography variant="small" className="font-black text-brand-primary uppercase tracking-tight leading-none">Portal do Cliente</Typography>
+              <Typography variant="small" className="font-black text-white uppercase tracking-tight leading-none">Portal do Cliente</Typography>
               <Typography variant="caption" className="text-brand-secondary text-[8px] font-black uppercase tracking-[0.3em]">Hermida Maia</Typography>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-             <div className="hidden md:flex items-center gap-3 px-4 py-1.5 bg-slate-50 rounded-full border border-slate-100">
+             <div className="hidden md:flex items-center gap-3 px-4 py-1.5 bg-white/5 rounded-full border border-white/10">
                <div className="w-6 h-6 rounded-full bg-brand-secondary flex items-center justify-center text-[10px] font-black text-brand-primary">
                  {user?.email?.[0].toUpperCase()}
                </div>
-               <span className="text-[10px] font-bold text-slate-600">{user?.email?.split('@')[0]}</span>
+               <span className="text-[10px] font-bold text-white/80">{user?.email?.split('@')[0]}</span>
              </div>
              <button 
                 onClick={onLogout}
-                className="flex items-center gap-2 px-4 py-2 text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+                className="flex items-center gap-2 px-4 py-2 text-rose-300 hover:text-white hover:bg-rose-500/20 rounded-xl transition-all"
              >
                 <LogOut size={16} /> <span className="hidden md:inline text-[10px] font-black uppercase tracking-widest">Sair</span>
              </button>
              <button 
-               className="md:hidden p-2 text-slate-500"
+               className="md:hidden p-2 text-white/70"
                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
              >
                {mobileMenuOpen ? <X /> : <Menu />}
@@ -76,13 +76,13 @@ export const ClientPortal: React.FC<Props> = ({ user, onLogout }) => {
 
       {/* MOBILE MENU */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-20 bg-white z-40 p-6 border-t border-slate-100 overflow-y-auto">
+        <div className="md:hidden fixed inset-0 top-20 bg-[#1a2b4a] z-40 p-6 border-t border-white/10 overflow-y-auto">
            <nav className="space-y-2">
               {PortalLabels.tabs.map(tab => (
                 <button 
                   key={tab.id}
                   onClick={() => { setActiveTab(tab.id); setMobileMenuOpen(false); }}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all ${activeTab === tab.id ? 'bg-brand-primary text-white' : 'bg-slate-50 text-slate-500'}`}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all ${activeTab === tab.id ? 'bg-brand-secondary text-brand-primary' : 'bg-white/5 text-white/70'}`}
                 >
                   {tab.icon}
                   <span className="text-xs font-black uppercase tracking-widest">{tab.label}</span>

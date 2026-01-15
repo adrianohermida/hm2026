@@ -37,14 +37,7 @@ export const PortalPage: React.FC<{
 }> = ({ isAdmin = false, onLogout, onNavigate, children, user }) => {
   const [activeRoute, setActiveRoute] = useState('dashboard');
   const [processoId, setProcessoId] = useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const sync = () => {
@@ -89,31 +82,23 @@ export const PortalPage: React.FC<{
     }
   };
 
-  // Cores dinâmicas para o Header
-  const headerClass = isScrolled 
-    ? 'bg-white shadow-lg border-b border-slate-100 py-3' 
-    : 'bg-[#1a2b4a] py-6'; // Azul escuro sólido quando no topo para contraste perfeito com texto branco
-
-  const textClass = isScrolled ? 'text-brand-primary' : 'text-white';
-  const logoVariant = isScrolled ? 'dark' : 'light';
-  const buttonClass = isScrolled 
-    ? 'text-slate-500 hover:text-brand-primary hover:bg-slate-50' 
-    : 'text-white/70 hover:text-white hover:bg-white/10';
-  const activeClass = isScrolled
-    ? 'text-brand-secondary bg-brand-accent font-bold'
-    : 'text-brand-secondary bg-white/10 font-bold';
+  // Cores Estáticas para o Header (HM-V12 Standard)
+  const headerClass = 'bg-[#1a2b4a] shadow-lg border-b border-white/10 py-4';
+  const textClass = 'text-white';
+  const buttonClass = 'text-white/70 hover:text-white hover:bg-white/10';
+  const activeClass = 'text-brand-secondary bg-white/10 font-bold';
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans flex flex-col w-full selection:bg-brand-secondary/30">
       
-      {/* SMART HEADER (FIXED TOP) */}
-      <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${headerClass}`}>
+      {/* STATIC HEADER (FIXED TOP) */}
+      <header className={`fixed top-0 left-0 w-full z-[100] ${headerClass}`}>
         <div className="max-w-[1920px] mx-auto px-6 lg:px-12 flex items-center justify-between">
           
           {/* Logo & Brand */}
           <div className="flex items-center gap-4 cursor-pointer group" onClick={() => handleNavClick('dashboard')}>
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center p-1.5 transition-transform group-hover:scale-105 ${isScrolled ? 'bg-brand-primary' : 'bg-white/10 border border-white/20'}`}>
-              <Logo variant={isScrolled ? 'light' : 'light'} /> 
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center p-1.5 transition-transform group-hover:scale-105 bg-brand-primary border border-white/20">
+              <Logo variant="light" /> 
             </div>
             <div className="hidden md:block">
               <Typography variant="h4" font="serif" className={`${textClass} text-lg leading-none transition-colors`}>Kernel Admin</Typography>
@@ -137,7 +122,7 @@ export const PortalPage: React.FC<{
 
           {/* User & Actions */}
           <div className="flex items-center gap-4">
-            <div className={`hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full border ${isScrolled ? 'border-slate-200 bg-slate-50' : 'border-white/10 bg-white/5'}`}>
+            <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
                <div className="w-6 h-6 rounded-full bg-brand-secondary flex items-center justify-center text-[10px] font-black text-brand-primary">
                  {user?.email?.[0].toUpperCase() || 'A'}
                </div>
@@ -146,7 +131,7 @@ export const PortalPage: React.FC<{
 
             <button 
               onClick={onLogout} 
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-rose-500 hover:text-white ${isScrolled ? 'text-rose-500 bg-rose-50' : 'text-white/60 bg-white/5'}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-rose-500 hover:text-white text-white/60 bg-white/5"
             >
                <LogOut size={16} /> <span className="hidden sm:inline">Sair</span>
             </button>
@@ -164,7 +149,7 @@ export const PortalPage: React.FC<{
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[90] bg-brand-primary pt-24 px-6 pb-6 lg:hidden animate-in slide-in-from-top-10">
+        <div className="fixed inset-0 z-[90] bg-[#1a2b4a] pt-24 px-6 pb-6 lg:hidden animate-in slide-in-from-top-10">
           <div className="grid gap-2">
             {NAV_ITEMS.map((item) => (
               <button
