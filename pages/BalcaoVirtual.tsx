@@ -1,5 +1,5 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-/* HM-V12 Fix: Added CheckCircle2 to imports */
 import { Headset, Send, Sparkles, ShieldCheck, RefreshCw, MessageSquare, Zap, User, ArrowLeft, Bot, CheckCircle2 } from 'lucide-react';
 import { Container } from '../components/atoms/Container.tsx';
 import { Typography } from '../components/atoms/Typography.tsx';
@@ -24,7 +24,6 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, step]);
 
-  // HM-V12: REALTIME P2P SYNC
   useEffect(() => {
     if (!session?.id) return;
 
@@ -35,10 +34,8 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         table: 'logs_conversas',
         filter: `sessao_id=eq.${session.id}`
       }, (payload) => {
-        // Se a mensagem vier do Admin ('model'), adicionamos ao chat
         if (payload.new.role === 'model') {
           setMessages(prev => {
-            // Evita duplicatas se a IA e o Admin responderem (a IA já adiciona localmente no handleSend)
             const exists = prev.some(m => m.text === payload.new.text && m.role === 'model');
             if (exists) return prev;
             return [...prev, { role: 'model', parts: [{ text: payload.new.text }] }];
@@ -77,8 +74,6 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     try {
       const history = messages.map(m => ({ role: m.role, parts: m.parts }));
       const response = await BalcaoVirtualRouter.getTriageResponse(userText, session, history);
-      // Nota: A resposta da IA já foi logada no banco pelo router, 
-      // mas adicionamos aqui para UI imediata. O listener de Realtime evitará a duplicação.
       setMessages(prev => [...prev, { role: 'model', parts: [{ text: String(response) }] }]);
     } catch (e) {
       console.error(e);
@@ -102,21 +97,21 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#05080F] text-white flex flex-col p-6 relative overflow-hidden font-sans select-none">
+    <div className="min-h-screen bg-[#1a2b4a] text-white flex flex-col p-6 relative overflow-hidden font-sans select-none">
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-brand-secondary/5 blur-[180px] rounded-full" />
       </div>
       
       <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col flex-1">
-        <header className="flex items-center justify-between py-10 border-b border-white/5 mb-10">
-           <button onClick={onBack} className="flex items-center gap-3 text-white/30 hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] group">
+        <header className="flex items-center justify-between py-10 border-b border-white/10 mb-10">
+           <button onClick={onBack} className="flex items-center gap-3 text-white/40 hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] group">
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Voltar
            </button>
            <div className="flex items-center gap-4">
               <Headset size={24} className="text-brand-secondary" />
               <Typography variant="h4" font="serif" className="text-xl">Balcão <span className="text-brand-secondary italic font-normal">Virtual</span></Typography>
            </div>
-           <div className="flex items-center gap-2 px-4 py-1.5 bg-emerald-500/5 border border-emerald-500/20 rounded-full">
+           <div className="flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
               <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
               <span className="text-[8px] font-black uppercase text-emerald-500/80 tracking-widest">P2P Realtime</span>
            </div>
@@ -147,8 +142,8 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           )}
 
           {step === 'TRIAGE' && (
-            <div className="w-full flex flex-col h-[75vh] bg-white/[0.03] rounded-[4rem] border border-white/5 overflow-hidden shadow-2xl animate-in zoom-in-95 duration-500">
-               <div className="p-8 border-b border-white/5 flex items-center justify-between bg-black/40 backdrop-blur-md">
+            <div className="w-full flex flex-col h-[75vh] bg-white/[0.05] rounded-[4rem] border border-white/10 overflow-hidden shadow-2xl animate-in zoom-in-95 duration-500">
+               <div className="p-8 border-b border-white/10 flex items-center justify-between bg-[#132038]/60 backdrop-blur-md">
                   <div className="flex items-center gap-6">
                     <div className="w-12 h-12 bg-brand-secondary text-brand-primary rounded-2xl flex items-center justify-center shadow-xl">
                       <Zap size={24}/>
@@ -159,14 +154,14 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     </div>
                   </div>
                   <button onClick={handleFinish} className="px-8 py-4 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all">
-                     Encerrar e Gerar Protocolo
+                     Encerrar Atendimento
                   </button>
                </div>
 
                <div ref={scrollRef} className="flex-1 overflow-y-auto p-12 space-y-8 custom-scrollbar-dark">
                   {messages.map((m, i) => (
                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2`}>
-                       <div className={`max-w-[80%] p-7 rounded-[2.5rem] text-sm leading-relaxed ${m.role === 'user' ? 'bg-brand-primary text-white border border-brand-secondary/20 rounded-tr-none' : 'bg-white/5 text-white/80 border border-white/5 rounded-tl-none'}`}>
+                       <div className={`max-w-[80%] p-7 rounded-[2.5rem] text-sm leading-relaxed ${m.role === 'user' ? 'bg-[#1a2b4a] text-white border border-brand-secondary/20 rounded-tr-none shadow-lg' : 'bg-white/5 text-white/80 border border-white/5 rounded-tl-none'}`}>
                           {m.parts[0]?.text}
                        </div>
                     </div>
@@ -174,7 +169,7 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   {loading && <div className="flex justify-start"><div className="bg-white/5 p-4 rounded-full border border-white/5 animate-pulse text-[10px] uppercase font-black text-brand-secondary">IA Processando...</div></div>}
                </div>
 
-               <div className="p-8 border-t border-white/5 bg-black/40">
+               <div className="p-8 border-t border-white/10 bg-[#132038]/40">
                   <div className="max-w-4xl mx-auto flex gap-4">
                      <textarea 
                         className="flex-1 bg-white/5 border border-white/10 rounded-[2rem] p-6 outline-none focus:ring-4 focus:ring-brand-secondary/10 transition-all resize-none text-sm leading-relaxed text-brand-secondary"
@@ -201,7 +196,7 @@ export const BalcaoVirtual: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                  <Typography variant="h1" font="serif" className="text-emerald-400 text-4xl">Protocolo Ativo</Typography>
                  <Typography variant="body" className="text-white/40">Sua jornada foi formalizada sob o protocolo:</Typography>
                </div>
-               <div className="bg-black/60 p-10 rounded-[2.5rem] border border-white/5 font-mono text-3xl text-brand-secondary tracking-widest shadow-inner">
+               <div className="bg-[#132038]/60 p-10 rounded-[2.5rem] border border-white/5 font-mono text-3xl text-brand-secondary tracking-widest shadow-inner">
                   {protocol}
                </div>
                <Button variant="outline" onClick={onBack} className="text-white border-white/10 h-16 px-12">Concluir Atendimento</Button>

@@ -14,6 +14,7 @@ import { Navbar } from './components/layout/Navbar.tsx';
 import { LegalChatWidget } from './components/LegalChatWidget.tsx';
 import { BalcaoVirtual } from './pages/BalcaoVirtual.tsx';
 import { HelpCenter } from './pages/HelpCenter.tsx';
+import { AppointmentsPage } from './pages/AppointmentsPage.tsx';
 import { ArtigoBlog } from './types.ts';
 
 const App: React.FC = () => {
@@ -29,8 +30,6 @@ const App: React.FC = () => {
 
   const handleLogin = (role: any) => {
     setIsAuthenticated(true);
-    // HM-V12: Normalização de Identidade. 
-    // Mapeia 'authenticated' (Supabase default) ou qualquer valor não-admin para 'cliente'.
     setUserRole(role === 'admin' ? 'admin' : 'cliente');
     setCurrentPage('portal');
   };
@@ -67,6 +66,7 @@ const App: React.FC = () => {
       {currentPage === 'ajuda' && <HelpCenter onNavigate={setCurrentPage} />}
       {currentPage === 'balcao-virtual' && <BalcaoVirtual onBack={() => setCurrentPage('home')} />}
       {currentPage === 'login' && <AuthPage onLogin={handleLogin} onBack={() => setCurrentPage('home')} />}
+      {currentPage === 'agendamento' && <AppointmentsPage onBack={() => setCurrentPage('home')} />}
 
       {!['portal', 'login', 'balcao-virtual'].includes(currentPage) && (
         <LegalChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />

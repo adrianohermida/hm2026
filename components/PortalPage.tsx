@@ -93,16 +93,17 @@ export const PortalPage: React.FC<{
 
   return (
     <div className="flex h-screen bg-[#F1F5F9] overflow-hidden select-none">
-      <aside className={`${collapsed ? 'w-[100px]' : 'w-[300px]'} bg-[#0b1321] text-white flex flex-col border-r border-white/5 transition-all duration-500 shadow-2xl z-[100]`}>
-        <div className="p-8 flex flex-col items-center border-b border-white/5 bg-black/20">
-          <div onClick={() => setCollapsed(!collapsed)} className="w-12 h-12 bg-[#c5a059] rounded-[1.2rem] flex items-center justify-center font-serif font-black shadow-2xl text-[#0b1321] text-xl cursor-pointer hover:rotate-12 transition-transform">HM</div>
+      {/* Sidebar alinhado à cor matriz #1a2b4a */}
+      <aside className={`${collapsed ? 'w-[100px]' : 'w-[300px]'} bg-[#1a2b4a] text-white flex flex-col border-r border-white/5 transition-all duration-500 shadow-2xl z-[100]`}>
+        <div className="p-8 flex flex-col items-center border-b border-white/5 bg-[#132038]/40">
+          <div onClick={() => setCollapsed(!collapsed)} className="w-12 h-12 bg-[#c5a059] rounded-[1.2rem] flex items-center justify-center font-serif font-black shadow-2xl text-[#1a2b4a] text-xl cursor-pointer hover:rotate-12 transition-transform">HM</div>
         </div>
         
         <nav className="flex-1 overflow-y-auto py-8 px-5 space-y-2 custom-scrollbar-dark">
           {menuItems.map((item) => (
             <div key={item.id} className="relative group">
-              <button onClick={() => changeModule(item.route)} className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 ${activeModule === item.route ? 'bg-[#c5a059] text-[#0b1321] shadow-lg' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}>
-                <div className={`${activeModule === item.route ? 'text-[#0b1321]' : 'text-[#c5a059]/50'} flex items-center gap-3 shrink-0`}>
+              <button onClick={() => changeModule(item.route)} className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 ${activeModule === item.route ? 'bg-[#c5a059] text-[#1a2b4a] shadow-lg' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}>
+                <div className={`${activeModule === item.route ? 'text-[#1a2b4a]' : 'text-[#c5a059]/50'} flex items-center gap-3 shrink-0`}>
                   {item.icon}
                 </div>
                 {!collapsed && (
@@ -116,13 +117,13 @@ export const PortalPage: React.FC<{
         </nav>
 
         <div className="p-6 border-t border-white/5">
-          <button onClick={onLogout} className="w-full flex items-center justify-center gap-3 py-3 text-rose-400/50 hover:text-rose-400 font-black uppercase text-[8px] tracking-widest bg-white/5 rounded-xl transition-colors"><LogOut size={16} /> {!collapsed && 'Sair'}</button>
+          <button onClick={onLogout} className="w-full flex items-center justify-center gap-3 py-3 text-rose-400/70 hover:text-rose-400 font-black uppercase text-[8px] tracking-widest bg-white/5 rounded-xl transition-colors"><LogOut size={16} /> {!collapsed && 'Sair'}</button>
         </div>
       </aside>
 
       <main className="flex-1 flex flex-col overflow-hidden relative">
         <header className="h-20 bg-white border-b border-slate-200 px-10 flex items-center justify-between shadow-sm">
-          <Typography variant="h3" font="serif" className="text-[#0b1321] uppercase text-xs tracking-[0.3em]">
+          <Typography variant="h3" font="serif" className="text-[#1a2b4a] uppercase text-xs tracking-[0.3em]">
             Hermida Maia <span className="text-[#c5a059] italic">Digital</span>
           </Typography>
         </header>

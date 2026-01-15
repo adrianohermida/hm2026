@@ -40,13 +40,13 @@ export const Footer: React.FC = () => {
           <div>
             <Typography variant="caption" className="text-brand-primary mb-6 block font-black">Atendimento</Typography>
             <ul className="space-y-4 text-sm text-slate-500">
-              <li className="flex items-start gap-3">
+              <li className="flex items-start gap-3 cursor-pointer" onClick={() => window.location.hash = '#/contato'}>
                 <MapPin className="w-4 h-4 text-brand-secondary flex-shrink-0 mt-0.5" /> 
-                Av. Paulista, 1000 - SP
+                <span className="underline">Encontre nossas unidades</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-brand-secondary flex-shrink-0" /> 
-                (51)  99603-2004
+                (51) 99603-2004
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-brand-secondary flex-shrink-0" /> 
@@ -80,10 +80,10 @@ export const Footer: React.FC = () => {
 
         <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
           <Typography variant="caption" className="text-slate-400 normal-case font-bold text-center uppercase tracking-tighter">
-            © 2024 Dr. Adriano Hermida Maia | Sociedade de Advogados
+            © 2026. Hermida Maia Advocacia. Todos os direitos reservados.
           </Typography>
           <div className="flex items-center gap-4">
-             <Typography variant="caption" className="text-brand-secondary font-black">OAB/SP 435.545</Typography>
+             <Typography variant="caption" className="text-brand-secondary font-black">OAB/RS 10748</Typography>
              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
           </div>
         </div>

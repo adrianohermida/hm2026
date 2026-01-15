@@ -26,10 +26,10 @@ export const Typography: React.FC<TypographyProps> = ({
     caption: 'text-xs font-bold uppercase tracking-widest',
   };
 
-  // HM-V12 Security: Previne a renderização de objetos [object Object]
+  // HM-V12 Security Fix: Permite arrays (múltiplos filhos) e evita objetos literais [object Object]
   const renderSafeChildren = () => {
-    if (typeof children === 'object' && children !== null && !React.isValidElement(children)) {
-      return ''; // Ignora objetos para evitar erro visual
+    if (typeof children === 'object' && children !== null && !React.isValidElement(children) && !Array.isArray(children)) {
+      return ''; 
     }
     return children;
   };

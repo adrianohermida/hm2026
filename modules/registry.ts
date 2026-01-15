@@ -19,6 +19,7 @@ import { V12BlankSkeleton } from './v12-blank/v12-blank-skeleton.tsx';
 import { PaginaVaziaSkeleton } from './pagina-vazia/pagina-vazia-skeleton.tsx';
 import { LabSkeleton } from './lab/lab-skeleton.tsx';
 import { TrulyBlankSkeleton } from './truly-blank/truly-blank-skeleton.tsx';
+import { AppointmentsSkeleton } from './appointments/appointments-skeleton.tsx';
 import { IModuleSkeleton } from './contracts.ts';
 
 export const ModuleRegistry: IModuleSkeleton[] = [
@@ -41,5 +42,6 @@ export const ModuleRegistry: IModuleSkeleton[] = [
   BlankCanvasSkeleton as any,
   V12BlankSkeleton as any,
   PaginaVaziaSkeleton as any,
-  LabSkeleton as any
+  LabSkeleton as any,
+  AppointmentsSkeleton as any
 ].sort((a, b) => a.sidebar.order - b.sidebar.order);

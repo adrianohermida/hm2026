@@ -7,7 +7,7 @@
   <title>Hermida Maia | Advocacia Digital Estratégica</title>
   <link rel="canonical" href="https://hermidamaia.adv.br" />
   <meta name="description" content="Defesa especializada em Superendividamento e Direito Bancário sob o Kernel HM-V12.">
-  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AMFEx0T8p9ZzAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkZW5mdwAAAnRJREFUaN7tmT9oE2Ecx7+XpBeTpq0mTRuToonSptG0YitIsS0idCiKdnAs6OCm4uTg4KSDi4ubg4OLi06iDg46iDg46iCiDqI6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDqIOog6iDqIOog6iDqIOog6iDqIOog6iCiDqI6iDq..."/>
+  <link rel="icon" type="image/jpeg" href="https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/103281573075/logo/oOhgdz-RkoNxDDiqm90272xdS_PhoJDHbQ.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,11 +15,12 @@
         extend: {
           colors: {
             brand: {
-              primary: '#0b1321',
+              primary: '#1a2b4a',
               button: '#1a2b4a',
               secondary: '#c5a059',
               secondaryLight: '#d4b476',
               accent: '#f4f7fa',
+              deep: '#132038', // Substituto para o preto em fundos profundos
             }
           },
           animation: {
@@ -57,9 +58,12 @@
     .custom-scrollbar-dark::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar-dark::-webkit-scrollbar { background: rgba(255,255,255,0.1); border-radius: 10px; }
     body.mobile-menu-active { overflow: hidden; }
-    .bg-brand-primary { background-color: #0b1321 !important; }
-    .text-brand-primary { color: #0b1321 !important; }
-    .border-brand-primary { border-color: #0b1321 !important; }
+    /* Overrides para evitar o uso de preto em componentes legados */
+    .bg-brand-primary { background-color: #1a2b4a !important; }
+    .text-brand-primary { color: #1a2b4a !important; }
+    .border-brand-primary { border-color: #1a2b4a !important; }
+    .bg-black { background-color: #132038 !important; }
+    .text-black { color: #1a2b4a !important; }
   </style>
 </head>
 <body class="bg-white">

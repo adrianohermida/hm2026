@@ -1,5 +1,5 @@
 
-import { ArtigoBlog, LeadCRM, Ticket, TicketThread, UnidadeConciliacao, ModeloDocumento, ModuloSistema, RegistroAuditoria, LogAuditoriaDetalhada, PastaResposta, RespostaPredefinida } from '../types.ts';
+import { ArtigoBlog, LeadCRM, Ticket, TicketThread, UnidadeConciliacao, ModeloDocumento, ModuloSistema, RegistroAuditoria, LogAuditoriaDetalhada, PastaResposta, RespostaPredefinida, Profissional, Slot } from '../types.ts';
 
 // Mock Supabase Client
 // HM-V12 Fix: Updated channel.on mock to accept arguments to resolve "Expected 0 arguments, but got 3" error in BalcaoVirtual.tsx
@@ -12,8 +12,41 @@ export const supabase = {
     on: (type: any, filter: any, callback: any) => ({
       subscribe: () => ({ unsubscribe: () => {} })
     }),
+  }),
+  schema: (name: string) => ({
+    from: (table: string) => ({
+      select: (cols?: string) => ({
+        order: (col: string, opt?: any) => ({
+          eq: (c: string, v: any) => ({
+            eq: (c2: string, v2: any) => ({
+              eq: (c3: string, v3: any) => Promise.resolve({ data: [], error: null })
+            }),
+            maybeSingle: () => Promise.resolve({ data: null, error: null })
+          })
+        })
+      }),
+      insert: (payload: any) => ({
+        select: () => ({
+          single: () => Promise.resolve({ data: { id: '1', protocolo: 'HM-2024-0001' }, error: null })
+        })
+      }),
+      upsert: (p: any, o?: any) => Promise.resolve({ error: null })
+    })
   })
 };
+
+export const PROFISSIONAIS_MOCK: Profissional[] = [
+  { id: '1', nome: 'Dr. Adriano Hermida Maia', especialidade: 'Direito Bancário & Superendividamento', avatar_url: 'https://hermidamaia.adv.br/styles/assets/images/perfil_2.jpg' },
+  { id: '2', nome: 'Dra. Carolina Mendes', especialidade: 'Direito Civil & Contratual' }
+];
+
+export const SLOTS_MOCK: Slot[] = [
+  { id: '1', hora_inicio: '09:00', disponivel: true },
+  { id: '2', hora_inicio: '10:30', disponivel: true },
+  { id: '3', hora_inicio: '14:00', disponivel: true },
+  { id: '4', hora_inicio: '15:30', disponivel: true },
+  { id: '5', hora_inicio: '17:00', disponivel: true }
+];
 
 export const BLOG_POSTS_DATA: ArtigoBlog[] = [
   {

@@ -271,3 +271,17 @@ export interface ModeloDocumento {
   descricao: string;
   categoria: string;
 }
+
+// HM-V12: Appointments types
+export interface Profissional {
+  id: string;
+  nome: string;
+  especialidade: string;
+  avatar_url?: string;
+}
+
+export interface Slot {
+  id: string;
+  hora_inicio: string;
+  disponivel: boolean;
+}

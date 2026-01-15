@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
-import { Menu, X, ChevronRight, LayoutGrid, MessageSquare, BookOpen, User, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Menu, X, ChevronRight, LayoutGrid, MessageSquare, BookOpen, User, ShieldCheck, HelpCircle, Calendar } from 'lucide-react';
 import { Container } from '../ui/Container.tsx';
 import { Typography } from '../ui/Typography.tsx';
 import { Button } from '../ui/Button.tsx';
@@ -14,7 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isLightPage = ['escritorio', 'blog', 'contato', 'superendividamento', 'direito-bancario', 'recuperacao-falencia', 'blogspot', 'ajuda'].includes(currentPage);
+  const isLightPage = ['escritorio', 'blog', 'contato', 'superendividamento', 'direito-bancario', 'recuperacao-falencia', 'blogspot', 'ajuda', 'agendamento'].includes(currentPage);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 15);
@@ -52,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
   const navItems = [
     { label: 'Início', route: 'home', icon: <LayoutGrid size={20}/> },
     { label: 'O Sócio', route: 'escritorio', icon: <User size={20}/> },
-    { label: 'Soluções', route: 'home', section: 'servicos', icon: <Logo className="w-5 h-5" variant="light" /> },
+    { label: 'Agendar', route: 'agendamento', icon: <Calendar size={20}/> },
     { label: 'Educação', route: 'blog', icon: <BookOpen size={20}/> },
     { label: 'Ajuda', route: 'ajuda', icon: <HelpCircle size={20}/> },
     { label: 'Contato', route: 'contato', icon: <MessageSquare size={20}/> }
@@ -86,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             {navItems.map((item) => (
               <button 
                 key={item.label} 
-                onClick={() => handleNavigation(item.route, item.section)}
+                onClick={() => handleNavigation(item.route)}
                 className={`text-[9px] font-black uppercase tracking-widest hover:text-brand-secondary transition-all py-2 border-b-2 border-transparent ${
                   hasBackground ? 'text-slate-600' : 'text-white/90'
                 } ${currentPage === item.route ? 'border-brand-secondary text-brand-secondary' : ''}`}
@@ -117,13 +118,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             {navItems.map((item, i) => (
               <button 
                 key={item.label}
-                onClick={() => handleNavigation(item.route, item.section)}
+                onClick={() => handleNavigation(item.route)}
                 className="w-full flex items-center justify-between p-6 rounded-2xl bg-white/5 border border-white/5 active:bg-brand-secondary active:text-brand-primary transition-all group"
                 style={{ transitionDelay: `${i * 50}ms` }}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-lg bg-brand-primary border border-white/10 flex items-center justify-center p-2">
-                    {item.label === 'Soluções' ? <Logo variant="light" /> : item.icon}
+                    {item.icon}
                   </div>
                   <Typography variant="h4" font="serif" className="text-white group-active:text-brand-primary text-2xl">
                     {item.label}
