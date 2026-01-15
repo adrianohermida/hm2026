@@ -10,6 +10,8 @@
   <meta property="og:url" content="https://hermidamaia.adv.br" />
   <meta property="og:description" content="Referência nacional na Lei do Superendividamento e proteção patrimonial." />
   <link rel="icon" type="image/jpeg" href="https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/103281573075/logo/oOhgdz-RkoNxDDiqm90272xdS_PhoJDHbQ.jpg" />
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -36,31 +38,37 @@
       }
     }
   </script>
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Babel Standalone para processar TSX no navegador (Fix para GitHub Pages sem build step) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "zod": "https://esm.sh/zod@^4.3.5",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1",
-    "ai": "https://esm.sh/ai@^4.1.45",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
-    "@hey-boss/users-service/": "https://esm.sh/@hey-boss/users-service@^0.0.18/"
+  {
+    "imports": {
+      "react": "https://esm.sh/react@^19.2.3",
+      "react/": "https://esm.sh/react@^19.2.3/",
+      "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+      "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+      "zod": "https://esm.sh/zod@^4.3.5",
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1",
+      "ai": "https://esm.sh/ai@^4.1.45",
+      "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
+      "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+      "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    }
   }
-}
-</script>
+  </script>
+
   <style>
     .custom-scrollbar::-webkit-scrollbar { width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
     .custom-scrollbar-dark::-webkit-scrollbar { width: 4px; }
     .custom-scrollbar-dark::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar-dark::-webkit-scrollbar { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar-dark::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     body.mobile-menu-active { overflow: hidden; }
     .bg-brand-primary { background-color: #1a2b4a !important; }
     .text-brand-primary { color: #1a2b4a !important; }
@@ -71,6 +79,18 @@
 </head>
 <body class="bg-white">
   <div id="root"></div>
-  <script type="module" src="./index.tsx"></script>
+  <!-- IMPORTANT: data-type="module" e type="text/babel" para que o Babel processe o TSX em tempo de execução -->
+  <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
+  
+  <!-- Script para lidar com o redirecionamento do 404.html -->
+  <script>
+    (function(){
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
 </body>
 </html>

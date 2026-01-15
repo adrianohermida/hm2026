@@ -10,14 +10,13 @@
   },
   "dependencies": {
     "react": "^19.2.3",
-    "@google/genai": "^1.35.0",
-    "react-dom": "^19.2.3",
     "lucide-react": "^0.562.0",
     "zod": "^4.3.5",
     "@supabase/supabase-js": "^2.90.1",
     "ai": "^4.1.45",
     "react-router-dom": "^7.12.0",
-    "@hey-boss/users-service": "^0.0.18"
+    "@google/genai": "^1.35.0",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

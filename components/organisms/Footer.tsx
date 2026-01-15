@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Instagram, 
@@ -7,14 +6,11 @@ import {
   Youtube, 
   Phone, 
   Mail, 
-  ArrowRight, 
   ChevronDown, 
   ChevronUp, 
   ShieldAlert, 
   MapPin, 
-  Globe, 
   ShieldCheck,
-  Zap,
   Send,
   HelpCircle,
   Calendar,
@@ -36,9 +32,6 @@ export const Footer: React.FC = () => {
   ];
 
   const handleManualNavigation = (route: string) => {
-    // HM-V12: Hack temporário para disparar navegação em componentes sem acesso ao hook, 
-    // ou simplesmente usar o window.location/scroll em links internos.
-    // Em produção, o Footer deve receber onNavigate via props para consistência.
     window.location.hash = `#/${route}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -51,7 +44,7 @@ export const Footer: React.FC = () => {
       <Container className="relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           
-          {/* COLUNA 1: IDENTIDADE */}
+          {/* COLUNA 1: IDENTIDADE (Idêntica ao Header) */}
           <div className="space-y-8">
             <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
               <div className="w-14 h-14 rounded-xl flex items-center justify-center p-2 shadow-xl transition-transform group-hover:scale-105 bg-brand-primary border border-brand-primary">

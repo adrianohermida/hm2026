@@ -2,18 +2,19 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hermida Maia | Redirecionando...</title>
+  <title>Hermida Maia | Carregando...</title>
   <script type="text/javascript">
-    // SPA Redirect para GitHub Pages
-    // Captura a rota atual (ex: /portal) e redireciona para a raiz com hash (ex: /#/portal)
-    // Isso permite que o React Router (HashStrategy) processe a URL corretamente.
+    // Single Page Apps for GitHub Pages
+    // Redireciona caminhos desconhecidos para o index.html com hash, permitindo que o React Router assuma.
     var path = window.location.pathname;
     var search = window.location.search;
     var hash = window.location.hash;
     
-    // Evita loop infinito se já estiver na raiz
-    if (path !== '/' && path !== '/index.html') {
-      var newPath = '/#' + path + search + hash;
+    var repoName = '/'; // Se o site não estiver na raiz (ex: /meu-repo), ajuste isso.
+    
+    if (path !== repoName && path !== repoName + 'index.html') {
+      // Reconstrói o caminho como hash para o React Router
+      var newPath = repoName + '#' + path.replace(repoName, '') + search + hash;
       window.location.replace(newPath);
     }
   </script>
