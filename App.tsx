@@ -11,7 +11,7 @@ import { ContatoPage } from './pages/Contato.tsx';
 import { AuthPage } from './auth/login.tsx';
 import { ProfilePage } from './pages/ProfilePage.tsx';
 import { AuthCallback } from './pages/AuthCallback.tsx';
-import { PortalPage } from './components/organisms/PortalPage.tsx'; // Importa versão correta
+import { PortalPage } from './components/organisms/PortalPage.tsx'; 
 import { ClientPortal } from './components/organisms/Portal/ClientPortal.tsx';
 import { Navbar } from './components/layout/Navbar.tsx';
 import { LegalChatWidget } from './components/LegalChatWidget.tsx';
@@ -22,26 +22,21 @@ import { Blank } from './pages/Blank.tsx';
 import { ArtigoBlog } from './types.ts';
 
 const App: React.FC = () => {
-  // HM-V12: Inicialização Lazy do Estado
-  // Lê a URL imediatamente para definir a página inicial correta e evitar "piscar" a Home
   const getInitialState = () => {
     const hash = window.location.hash.replace(/^#\/?/, '');
     
-    // Rotas Admin/Portal
     if (hash.startsWith('portal')) return 'portal';
     if (hash === 'login') return 'login';
     if (hash === 'perfil') return 'perfil';
     if (hash === 'auth-callback') return 'auth-callback';
     if (hash === 'blank') return 'blank';
     
-    // Rotas Públicas
     const validRoutes = [
       'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
       'blog', 'escritorio', 'contato', 'ajuda', 'balcao-virtual', 
       'agendamento', 'blogspot'
     ];
     
-    // Tratamento para sub-rotas (ex: blogspot/123)
     const baseRoute = hash.split('/')[0];
     if (validRoutes.includes(baseRoute) || validRoutes.includes(hash)) {
       return baseRoute === 'blogspot' ? 'blogspot' : hash;
@@ -57,22 +52,18 @@ const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // HM-V12: Router Robusto para GitHub Pages (Hash Strategy)
   const syncRoute = useCallback(() => {
     const hash = window.location.hash.replace(/^#\/?/, '');
     
-    // Raiz
     if (!hash) {
       if (currentPage !== 'home') setCurrentPage('home');
       return;
     }
 
-    // Rotas Admin/Portal
     if (hash.startsWith('portal')) {
       if (isAuthenticated) {
         setCurrentPage('portal');
       } else {
-        // Salva a tentativa de acesso para redirecionar pós-login (opcional)
         window.location.hash = '#/login';
         setCurrentPage('login');
       }
@@ -88,7 +79,6 @@ const App: React.FC = () => {
       return;
     }
 
-    // Rotas Públicas e Dinâmicas
     const validRoutes = [
       'home', 'direito-bancario', 'superendividamento', 'recuperacao-falencia', 
       'blog', 'escritorio', 'contato', 'ajuda', 'login', 'balcao-virtual', 
@@ -104,10 +94,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     (window as any).triggerHMChat = () => setIsChatOpen(true);
-    
-    // Executa syncRoute na montagem para garantir consistência
     syncRoute();
-    
     window.addEventListener('hashchange', syncRoute);
     return () => window.removeEventListener('hashchange', syncRoute);
   }, [syncRoute]);
@@ -145,7 +132,6 @@ const App: React.FC = () => {
 
   const navigateToPost = (post: ArtigoBlog) => {
     setSelectedPost(post);
-    // Adiciona ID ao hash se desejar persistência: #/blogspot/slug-do-post
     window.location.hash = `#/blogspot`;
     setCurrentPage('blogspot');
     window.scrollTo(0, 0);
